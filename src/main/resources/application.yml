@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: toilet-near-me
+  datasource:
+    url: jdbc:postgresql://localhost:5432/toilet
+    username: toilet
+    password: toilet
+  jpa:
+    show-sql: true
+    open-in-view: false
+
+server:
+  port: 8181
