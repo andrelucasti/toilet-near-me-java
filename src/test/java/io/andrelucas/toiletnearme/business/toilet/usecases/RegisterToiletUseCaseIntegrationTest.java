@@ -1,45 +1,15 @@
 package io.andrelucas.toiletnearme.business.toilet.usecases;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.andrelucas.toiletnearme.AbstractIntegrationTest;
 import io.andrelucas.toiletnearme.customer.Customer;
 import io.andrelucas.toiletnearme.customer.CustomerId;
-import io.andrelucas.toiletnearme.customer.CustomerRepository;
-import io.andrelucas.toiletnearme.infrastructure.inmemory.InMemoryCustomerRepository;
-import io.andrelucas.toiletnearme.toilet.business.ToiletRepository;
 import io.andrelucas.toiletnearme.toilet.business.usecases.RegisterToiletUseCase;
-import io.andrelucas.toiletnearme.toilet.infrastructure.db.jpa.ToiletOutboxSpringRepository;
-import io.andrelucas.toiletnearme.toilet.infrastructure.db.jpa.ToiletRepositoryJPAImpl;
-import io.andrelucas.toiletnearme.toilet.infrastructure.db.jpa.ToiletSpringRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-@SpringBootTest
-class RegisterToiletUseCaseIntegrationTest {
-
-    private ToiletRepository toiletRepository;
-    private CustomerRepository customerRepository;
-
-    @Autowired
-    private ToiletSpringRepository toiletSpringRepository;
-
-    @Autowired
-    private ToiletOutboxSpringRepository toiletOutboxSpringRepository;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @BeforeEach
-    void setUp() {
-        toiletSpringRepository.deleteAll();
-        toiletRepository = new ToiletRepositoryJPAImpl(toiletSpringRepository, toiletOutboxSpringRepository, objectMapper);
-
-        customerRepository = new InMemoryCustomerRepository();
-    }
+class RegisterToiletUseCaseIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void shouldRegisterToilet() {

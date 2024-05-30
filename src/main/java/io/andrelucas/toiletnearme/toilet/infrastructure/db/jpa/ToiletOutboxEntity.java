@@ -1,12 +1,9 @@
 package io.andrelucas.toiletnearme.toilet.infrastructure.db.jpa;
 
 import io.andrelucas.toiletnearme.toilet.business.events.ToiletEvent;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import io.andrelucas.toiletnearme.toilet.business.events.ToiletEventType;
+import jakarta.persistence.*;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
@@ -18,7 +15,8 @@ public class ToiletOutboxEntity {
     private UUID id;
 
     @Column(name = "type")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private ToiletEventType type;
 
     @Column(name="content", columnDefinition = "JSON", length = 4_000)
     private String content;
@@ -33,9 +31,9 @@ public class ToiletOutboxEntity {
     }
 
     public ToiletOutboxEntity(UUID id,
-                               String type,
-                               String content,
-                               boolean published,
+                              ToiletEventType type,
+                              String content,
+                              boolean published,
                               LocalDateTime creationDate) {
         this.id = id;
         this.type = type;
@@ -72,7 +70,7 @@ public class ToiletOutboxEntity {
         return published;
     }
 
-    public String getType() {
+    public ToiletEventType getType() {
         return type;
     }
 

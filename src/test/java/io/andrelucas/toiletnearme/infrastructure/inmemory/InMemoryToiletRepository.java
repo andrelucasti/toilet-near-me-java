@@ -2,7 +2,7 @@ package io.andrelucas.toiletnearme.infrastructure.inmemory;
 
 import io.andrelucas.toiletnearme.toilet.business.Toilet;
 import io.andrelucas.toiletnearme.toilet.business.ToiletId;
-import io.andrelucas.toiletnearme.toilet.business.ToiletRepository;
+import io.andrelucas.toiletnearme.toilet.business.repository.ToiletRepository;
 
 import java.util.HashMap;
 import java.util.List;

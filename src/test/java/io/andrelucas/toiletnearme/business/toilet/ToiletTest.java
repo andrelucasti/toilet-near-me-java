@@ -4,6 +4,7 @@ import io.andrelucas.toiletnearme.customer.CustomerId;
 import io.andrelucas.toiletnearme.toilet.business.GeolocationInvalidException;
 import io.andrelucas.toiletnearme.toilet.business.Toilet;
 import io.andrelucas.toiletnearme.toilet.business.events.ToiletCreatedEvent;
+import io.andrelucas.toiletnearme.toilet.business.events.ToiletEventType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -54,7 +55,7 @@ class ToiletTest {
                 if (domainEvent instanceof ToiletCreatedEvent event) {
                     assertEquals(toilet.id(), event.toiletId());
                     assertEquals(customerId, event.customerId());
-                    assertEquals("ToiletCreatedEvent", event.type());
+                    assertEquals(ToiletEventType.ToiletCreatedEvent, event.type());
                 } else {
                     Assertions.fail("Domain event not found");
                 }

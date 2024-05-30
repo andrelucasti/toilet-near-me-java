@@ -1,4 +1,4 @@
-package io.andrelucas.toiletnearme.toilet.infrastructure.events;
+package io.andrelucas.toiletnearme.toilet.infrastructure.events.internal.listeners;
 
 import io.andrelucas.toiletnearme.owner.business.commands.CreateOwnerCommand;
 import io.andrelucas.toiletnearme.owner.business.commands.OwnerCommandPublisher;
@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 public class ToiletCreatedEventListener {
@@ -23,7 +22,7 @@ public class ToiletCreatedEventListener {
         this.toiletOutboxSpringRepository = toiletOutboxSpringRepository;
     }
 
-    @TransactionalEventListener
+    @EventListener
     public void handler(final ToiletCreatedEvent event) {
         logger.info("Received event: {}", event);
         toiletOutboxSpringRepository.findById(event.idempotentId())
@@ -31,7 +30,8 @@ public class ToiletCreatedEventListener {
                     toiletOutboxSpringRepository.save(toiletOutboxEntity.published());
 
                     final var  createOwnerCommand = new CreateOwnerCommand(event.customerId().value(), event.toiletId().value());
-                    logger.info("Publishing command: {}", createOwnerCommand);
+
+                    logger.info("Sending command: {}", createOwnerCommand);
                     ownerCommandPublisher.publish(createOwnerCommand);
                 });
     }

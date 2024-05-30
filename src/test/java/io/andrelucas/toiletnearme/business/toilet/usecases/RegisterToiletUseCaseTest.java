@@ -5,7 +5,7 @@ import io.andrelucas.toiletnearme.customer.CustomerId;
 import io.andrelucas.toiletnearme.customer.CustomerNotFound;
 import io.andrelucas.toiletnearme.customer.CustomerRepository;
 import io.andrelucas.toiletnearme.toilet.business.Toilet;
-import io.andrelucas.toiletnearme.toilet.business.ToiletRepository;
+import io.andrelucas.toiletnearme.toilet.business.repository.ToiletRepository;
 import io.andrelucas.toiletnearme.toilet.business.usecases.RegisterToiletUseCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

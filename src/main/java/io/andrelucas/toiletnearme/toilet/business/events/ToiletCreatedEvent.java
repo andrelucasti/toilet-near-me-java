@@ -7,12 +7,14 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record ToiletCreatedEvent(UUID idempotentId,
-                                 String type,
+                                 ToiletEventType type,
                                  ToiletId toiletId,
                                  CustomerId customerId,
                                  LocalDateTime creationDate) implements ToiletEvent {
 
-    public ToiletCreatedEvent(ToiletId toiletId, CustomerId customerId) {
-        this(UUID.randomUUID(), "ToiletCreatedEvent", toiletId, customerId, LocalDateTime.now());
+    public ToiletCreatedEvent(final ToiletId toiletId,
+                              final CustomerId customerId) {
+
+        this(UUID.randomUUID(), ToiletEventType.ToiletCreatedEvent, toiletId, customerId, LocalDateTime.now());
     }
 }

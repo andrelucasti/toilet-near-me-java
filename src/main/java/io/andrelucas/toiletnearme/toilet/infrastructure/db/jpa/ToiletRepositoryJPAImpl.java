@@ -4,13 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.andrelucas.toiletnearme.toilet.business.Toilet;
 import io.andrelucas.toiletnearme.toilet.business.ToiletId;
-import io.andrelucas.toiletnearme.toilet.business.ToiletRepository;
+import io.andrelucas.toiletnearme.toilet.business.repository.ToiletRepository;
 import io.andrelucas.toiletnearme.toilet.business.events.ToiletEvent;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.StreamSupport;
 
 @Repository
@@ -20,7 +21,8 @@ public class ToiletRepositoryJPAImpl implements ToiletRepository {
     private final ObjectMapper objectMapper;
 
     public ToiletRepositoryJPAImpl(final ToiletSpringRepository toiletSpringRepository,
-                                   final ToiletOutboxSpringRepository toiletOutboxSpringRepository, ObjectMapper objectMapper) {
+                                   final ToiletOutboxSpringRepository toiletOutboxSpringRepository,
+                                   final ObjectMapper objectMapper) {
         this.toiletSpringRepository = toiletSpringRepository;
         this.toiletOutboxSpringRepository = toiletOutboxSpringRepository;
         this.objectMapper = objectMapper;
@@ -49,8 +51,9 @@ public class ToiletRepositoryJPAImpl implements ToiletRepository {
     }
 
     @Override
-    public Optional<Toilet> findById(ToiletId toiletId) {
-        return Optional.empty();
+    public Optional<Toilet> findById(final ToiletId toiletId) {
+        return toiletSpringRepository.findById(UUID.fromString(toiletId.value()))
+                .map(ToiletEntity::toToilet);
     }
 
     @Override

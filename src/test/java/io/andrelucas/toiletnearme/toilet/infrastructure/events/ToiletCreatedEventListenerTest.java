@@ -7,6 +7,7 @@ import io.andrelucas.toiletnearme.toilet.business.ToiletId;
 import io.andrelucas.toiletnearme.toilet.business.events.ToiletCreatedEvent;
 import io.andrelucas.toiletnearme.toilet.infrastructure.db.jpa.ToiletOutboxEntity;
 import io.andrelucas.toiletnearme.toilet.infrastructure.db.jpa.ToiletOutboxSpringRepository;
+import io.andrelucas.toiletnearme.toilet.infrastructure.events.internal.listeners.ToiletCreatedEventListener;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

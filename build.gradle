@@ -16,6 +16,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.jobrunr:jobrunr-spring-boot-3-starter:7.1.2'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3' // Adjust version as needed
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'

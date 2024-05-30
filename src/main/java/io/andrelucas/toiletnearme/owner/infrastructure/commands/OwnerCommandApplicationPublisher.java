@@ -1,4 +1,4 @@
-package io.andrelucas.toiletnearme.owner.infrastructure;
+package io.andrelucas.toiletnearme.owner.infrastructure.commands;
 
 import io.andrelucas.toiletnearme.owner.business.commands.OwnerCommand;
 import io.andrelucas.toiletnearme.owner.business.commands.OwnerCommandPublisher;

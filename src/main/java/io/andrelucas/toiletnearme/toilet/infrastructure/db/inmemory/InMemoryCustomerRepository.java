@@ -1,4 +1,4 @@
-package io.andrelucas.toiletnearme.infrastructure.inmemory;
+package io.andrelucas.toiletnearme.toilet.infrastructure.db.inmemory;
 
 import io.andrelucas.toiletnearme.customer.Customer;
 import io.andrelucas.toiletnearme.customer.CustomerId;
