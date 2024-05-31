@@ -61,4 +61,23 @@ class ToiletTest {
                 }
                     }, () -> Assertions.fail("Domain event not found"));
     }
+
+    @Test
+    void shouldReturnANewToiletAndAToiletItemWhenAItemIsCreated() {
+        final var customerId = CustomerId.newId();
+        final var toilet = Toilet.newToilet("Toilet", 0.0, 0.0, customerId);
+        final var toiletWithNewItem = toilet.addItem("Soap");
+
+        assertNotNull(toilet.id());
+        assertEquals("Toilet", toilet.name());
+        assertEquals(0.0, toilet.geolocation().latitude());
+        assertEquals(0.0, toilet.geolocation().longitude());
+
+        assertEquals(toilet.id(), toiletWithNewItem.id());
+        assertEquals("Toilet", toiletWithNewItem.name());
+        assertEquals(0.0, toiletWithNewItem.geolocation().latitude());
+        assertEquals(0.0, toiletWithNewItem.geolocation().longitude());
+        assertEquals(1, toiletWithNewItem.items().size());
+        assertEquals("Soap", toiletWithNewItem.items().stream().findFirst().get().description());
+    }
 }
