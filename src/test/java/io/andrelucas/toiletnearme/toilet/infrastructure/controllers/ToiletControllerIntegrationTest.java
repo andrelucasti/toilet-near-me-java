@@ -1,10 +1,14 @@
 package io.andrelucas.toiletnearme.toilet.infrastructure.controllers;
 
 import io.andrelucas.toiletnearme.AbstractE2ETest;
+import io.andrelucas.toiletnearme.customer.business.CustomerId;
 import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.Objects;
 
 
 class ToiletControllerIntegrationTest extends AbstractE2ETest {
@@ -30,16 +34,7 @@ class ToiletControllerIntegrationTest extends AbstractE2ETest {
 
     @Test
     void shouldReturnHttp201WhenAToiletIsCreatedWithSuccess() {
-        final var result = RestAssuredMockMvc.given()
-                .contentType(ContentType.JSON)
-                .body(customerBody("André Lucas", "andrelucastic@gmail.com"))
-                .post("/customer")
-                .getMvcResult();
-
-        final var customerId = result.getResponse().getHeader("Location").split("customer/")[1];
-
-        Assertions.assertEquals(201, result.getResponse().getStatus());
-
+        final var customerId = createNewCustomer();
 
         RestAssuredMockMvc.given()
                 .contentType(ContentType.JSON)
@@ -47,5 +42,57 @@ class ToiletControllerIntegrationTest extends AbstractE2ETest {
                 .post("/toilet")
                 .then()
                 .statusCode(201);
+    }
+
+    @Test
+    void shouldReturnBadRequestWhenLatitudeIsNotValid() {
+        final var customerId = createNewCustomer();
+
+        RestAssuredMockMvc.given()
+                .contentType(ContentType.JSON)
+                .body(toiletBody("A toilet", 91.0, 1.0, customerId))
+                .post("/toilet")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    void shouldReturnBadRequestWhenLongitudeIsNotValid() {
+        final var customerId = createNewCustomer();
+
+        RestAssuredMockMvc.given()
+                .contentType(ContentType.JSON)
+                .body(toiletBody("A toilet", 1.0, 181.0, customerId))
+                .post("/toilet")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    void shouldReturnBadRequestWhenCustomerIsNotFound() {
+        final var customerId = CustomerId.newId();
+
+        RestAssuredMockMvc.given()
+                .contentType(ContentType.JSON)
+                .body(toiletBody("A toilet", 1.0, 1.0, customerId.value()))
+                .post("/toilet")
+                .then()
+                .statusCode(400);
+    }
+
+    private String createNewCustomer() {
+        final var name = RandomStringUtils.random(10, true, false);
+        final var email = name + "@test.com";
+
+        final var result = RestAssuredMockMvc.given()
+                .contentType(ContentType.JSON)
+                .body(customerBody(name, email))
+                .post("/customer")
+                .getMvcResult();
+
+        final var customerId = Objects.requireNonNull(result.getResponse().getHeader("Location")).split("customer/")[1];
+        Assertions.assertEquals(201, result.getResponse().getStatus());
+
+        return customerId;
     }
 }
