@@ -4,6 +4,7 @@ import io.andrelucas.toiletnearme.customer.business.CustomerId;
 import io.andrelucas.toiletnearme.toilet.business.ToiletId;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 
 public record ToiletCreatedEvent(UUID idempotentId,
@@ -16,5 +17,11 @@ public record ToiletCreatedEvent(UUID idempotentId,
                               final CustomerId customerId) {
 
         this(UUID.randomUUID(), ToiletEventType.ToiletCreatedEvent, toiletId, customerId, LocalDateTime.now());
+    }
+
+    @Override
+    public Map<String, String> attributes() {
+        return Map.of("toiletId", toiletId().value(),
+                      "customerId", customerId().value());
     }
 }

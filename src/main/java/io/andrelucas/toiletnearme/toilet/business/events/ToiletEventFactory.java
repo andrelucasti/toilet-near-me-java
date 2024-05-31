@@ -14,17 +14,10 @@ public class ToiletEventFactory {
         try {
             return switch (eventType) {
                 case ToiletCreatedEvent -> objectMapper.readValue(content, ToiletCreatedEvent.class);
+                case ItemCreatedEvent -> objectMapper.readValue(content, ItemCreatedEvent.class);
             };
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public <T> ToiletEvent createBy(final ToiletEvent event) {
-        return switch (event){
-            case ToiletCreatedEvent toiletCreated -> toiletCreated;
-
-            default -> throw new IllegalArgumentException("Invalid event type: " + event);
-        };
     }
 }

@@ -2,12 +2,17 @@ package io.andrelucas.toiletnearme.business.toilet;
 
 import io.andrelucas.toiletnearme.customer.business.CustomerId;
 import io.andrelucas.toiletnearme.toilet.business.GeolocationInvalidException;
+import io.andrelucas.toiletnearme.toilet.business.Item;
 import io.andrelucas.toiletnearme.toilet.business.Toilet;
 import io.andrelucas.toiletnearme.toilet.business.events.ToiletCreatedEvent;
+import io.andrelucas.toiletnearme.toilet.business.events.ToiletEvent;
 import io.andrelucas.toiletnearme.toilet.business.events.ToiletEventType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -59,7 +64,8 @@ class ToiletTest {
                 } else {
                     Assertions.fail("Domain event not found");
                 }
-                    }, () -> Assertions.fail("Domain event not found"));
+
+                }, () -> Assertions.fail("Domain event not found"));
     }
 
     @Test
@@ -79,5 +85,33 @@ class ToiletTest {
         assertEquals(0.0, toiletWithNewItem.geolocation().longitude());
         assertEquals(1, toiletWithNewItem.items().size());
         assertEquals("Soap", toiletWithNewItem.items().stream().findFirst().get().description());
+    }
+
+    @Test
+    void shouldSaveTheDomainEventWhenAnItemIsAdded() {
+        final var customerId = CustomerId.newId();
+        final var toilet = Toilet.newToilet("Toilet", 0.0, 0.0, customerId);
+        final var toiletWithNewItem = toilet.addItem("Soap");
+
+        final var itemId = toiletWithNewItem.items().stream()
+                .findFirst()
+                .map(Item::id)
+                .orElseThrow();
+
+        final var eventTypes = toiletWithNewItem.domainEvents().stream()
+                .map(ToiletEvent::type).toList();
+        final var attributes = toiletWithNewItem.domainEvents().stream()
+                .flatMap(it-> it.attributes().values().stream())
+                .collect(Collectors.toSet());
+
+        assertEquals(2, toiletWithNewItem.domainEvents().size());
+        assertThat(eventTypes)
+                .containsOnly(
+                        ToiletEventType.ToiletCreatedEvent,
+                        ToiletEventType.ItemCreatedEvent
+                );
+
+        assertThat(attributes)
+                .containsOnly(toilet.id().value(), customerId.value(), itemId.value());
     }
 }

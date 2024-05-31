@@ -1,6 +1,7 @@
 package io.andrelucas.toiletnearme.toilet.business;
 
 import io.andrelucas.toiletnearme.customer.business.CustomerId;
+import io.andrelucas.toiletnearme.toilet.business.events.ItemCreatedEvent;
 import io.andrelucas.toiletnearme.toilet.business.events.ToiletCreatedEvent;
 import io.andrelucas.toiletnearme.common.AggregateRoot;
 import io.andrelucas.toiletnearme.toilet.business.events.ToiletEvent;
@@ -39,8 +40,13 @@ public record Toilet(ToiletId id,
     }
 
     public Toilet addItem(final String description) {
-        final var items = Set.of(Item.newItem(description));
+        final var newItem = Item.newItem(description);
+        final var items = Set.of(newItem);
 
-        return new Toilet(this.id, this.name, this.geolocation, items, this.domainEvents);
+        final var toilet = new Toilet(this.id, this.name, this.geolocation, items, this.domainEvents);
+
+        toilet.domainEvents.add(new ItemCreatedEvent(newItem.id(), this.id));
+
+        return toilet;
     }
 }
