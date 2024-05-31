@@ -28,5 +28,8 @@ public class ToiletController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    public record CreateToiletRequest(String description, double latitude, double longitude, String customerId){}
+    public record CreateToiletRequest(String description,
+                                      double latitude,
+                                      double longitude,
+                                      String customerId){}
 }

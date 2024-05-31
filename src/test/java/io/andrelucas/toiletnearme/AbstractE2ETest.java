@@ -8,29 +8,23 @@ import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.context.WebApplicationContext;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public abstract class AbstractE2ETest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
+
     @Autowired
-    private CustomerSpringRepository customerSpringRepository;
-    @Autowired
-    private ToiletOutboxSpringRepository toiletOutboxSpringRepository;
-    @Autowired
-    private ToiletSpringRepository toiletSpringRepository;
-    @Autowired
-    private OwnerSpringRepository ownerSpringRepository;
+    private ClearData clearData;
 
     @BeforeEach
     void setUp() {
-        ownerSpringRepository.deleteAll();
-        customerSpringRepository.deleteAll();
-        toiletSpringRepository.deleteAll();
-        toiletOutboxSpringRepository.deleteAll();
+        clearData.clear();
 
         RestAssuredMockMvc.webAppContextSetup(webApplicationContext);
     }

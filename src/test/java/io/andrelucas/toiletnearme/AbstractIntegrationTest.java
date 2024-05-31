@@ -10,16 +10,11 @@ import io.andrelucas.toiletnearme.toilet.infrastructure.db.jpa.ToiletSpringRepos
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class AbstractIntegrationTest {
-
-    @Autowired
-    private ToiletSpringRepository toiletSpringRepository;
-    @Autowired
-    private ToiletOutboxSpringRepository toiletOutboxSpringRepository;
-    @Autowired
-    private OwnerSpringRepository ownerSpringRepository;
 
     @Autowired
     protected ObjectMapper objectMapper;
@@ -33,10 +28,11 @@ public class AbstractIntegrationTest {
     @Autowired
     protected CustomerRepository customerRepository;
 
+    @Autowired
+    private ClearData clearData;
+
     @BeforeEach
     void setUp() {
-        ownerSpringRepository.deleteAll();
-        toiletSpringRepository.deleteAll();
-        toiletOutboxSpringRepository.deleteAll();
+      clearData.clear();
     }
 }

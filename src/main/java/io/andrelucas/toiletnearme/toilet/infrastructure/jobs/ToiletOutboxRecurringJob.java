@@ -1,7 +1,7 @@
 package io.andrelucas.toiletnearme.toilet.infrastructure.jobs;
 
-import io.andrelucas.toiletnearme.toilet.business.events.*;
-import io.andrelucas.toiletnearme.toilet.infrastructure.db.jpa.ToiletOutboxEntity;
+import io.andrelucas.toiletnearme.toilet.business.events.ToiletEventFactory;
+import io.andrelucas.toiletnearme.toilet.business.events.ToiletEventPublisher;
 import io.andrelucas.toiletnearme.toilet.infrastructure.db.jpa.ToiletOutboxSpringRepository;
 import org.jobrunr.jobs.annotations.Job;
 import org.jobrunr.jobs.annotations.Recurring;
@@ -26,10 +26,9 @@ public class ToiletOutboxRecurringJob {
     @Job(name = "Toilet Outbox Job")
     public void execute() {
         toiletOutboxSpringRepository.findAllByPublishedFalse()
-                .forEach(toiletOutboxEntity -> toiletEventPublisher.publish(this.toEvent(toiletOutboxEntity)));
-    }
-
-    private ToiletEvent toEvent(final ToiletOutboxEntity toiletOutboxEntity) {
-        return toiletEventFactory.createBy(toiletOutboxEntity.getType(), toiletOutboxEntity.getContent());
+                .forEach(toiletOutboxEntity -> {
+                    final var toiletEvent = toiletEventFactory.createBy(toiletOutboxEntity.getType(), toiletOutboxEntity.getContent());
+                    toiletEventPublisher.publish(toiletEvent);
+                });
     }
 }
