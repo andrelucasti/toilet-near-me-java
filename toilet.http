@@ -1,0 +1,22 @@
+### Create a new customer
+POST localhost:8181/customer
+Content-type: application/json
+
+{
+  "name": "Andre Lucas IO",
+  "email": "andrelucastic@gmail.com"
+}
+
+###
+@customerId = "571b6ad6-58f3-47c5-8448-60db0287a9ac"
+
+### Create a new toilet
+POST localhost:8181/toilet
+Content-type: application/json
+
+{
+    "description": "Toilet Gym Novo",
+    "latitude": 1.0,
+    "longitude": 1.0,
+    "customerId": "571b6ad6-58f3-47c5-8448-60db0287a9ac"
+}

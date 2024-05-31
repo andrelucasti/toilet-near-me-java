@@ -1,7 +1,7 @@
 package io.andrelucas.toiletnearme.customer.infrastructure.jpa;
 
-import io.andrelucas.toiletnearme.customer.Customer;
-import io.andrelucas.toiletnearme.customer.CustomerId;
+import io.andrelucas.toiletnearme.customer.business.Customer;
+import io.andrelucas.toiletnearme.customer.business.CustomerId;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

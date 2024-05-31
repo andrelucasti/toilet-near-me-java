@@ -1,9 +1,9 @@
 package io.andrelucas.toiletnearme.business.toilet.usecases;
 
-import io.andrelucas.toiletnearme.customer.Customer;
-import io.andrelucas.toiletnearme.customer.CustomerId;
-import io.andrelucas.toiletnearme.customer.CustomerNotFound;
-import io.andrelucas.toiletnearme.customer.CustomerRepository;
+import io.andrelucas.toiletnearme.customer.business.Customer;
+import io.andrelucas.toiletnearme.customer.business.CustomerId;
+import io.andrelucas.toiletnearme.customer.business.CustomerNotFound;
+import io.andrelucas.toiletnearme.customer.business.CustomerRepository;
 import io.andrelucas.toiletnearme.toilet.business.Toilet;
 import io.andrelucas.toiletnearme.toilet.business.repository.ToiletRepository;
 import io.andrelucas.toiletnearme.toilet.business.usecases.RegisterToiletUseCase;

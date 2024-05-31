@@ -1,6 +1,6 @@
 package io.andrelucas.toiletnearme.business.toilet;
 
-import io.andrelucas.toiletnearme.customer.CustomerId;
+import io.andrelucas.toiletnearme.customer.business.CustomerId;
 import io.andrelucas.toiletnearme.toilet.business.GeolocationInvalidException;
 import io.andrelucas.toiletnearme.toilet.business.Toilet;
 import io.andrelucas.toiletnearme.toilet.business.events.ToiletCreatedEvent;

@@ -1,4 +1,4 @@
-package io.andrelucas.toiletnearme.customer;
+package io.andrelucas.toiletnearme.customer.business;
 
 public class CustomerNotFound extends RuntimeException {
 

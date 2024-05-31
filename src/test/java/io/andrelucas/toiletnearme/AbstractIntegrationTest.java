@@ -1,7 +1,7 @@
 package io.andrelucas.toiletnearme;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.andrelucas.toiletnearme.customer.CustomerRepository;
+import io.andrelucas.toiletnearme.customer.business.CustomerRepository;
 import io.andrelucas.toiletnearme.owner.business.OwnerRepository;
 import io.andrelucas.toiletnearme.owner.infrastructure.jpa.OwnerSpringRepository;
 import io.andrelucas.toiletnearme.toilet.business.repository.ToiletRepository;

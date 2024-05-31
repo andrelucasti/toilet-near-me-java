@@ -1,6 +1,6 @@
 package io.andrelucas.toiletnearme.toilet.business.events;
 
-import io.andrelucas.toiletnearme.customer.CustomerId;
+import io.andrelucas.toiletnearme.customer.business.CustomerId;
 import io.andrelucas.toiletnearme.toilet.business.ToiletId;
 
 import java.time.LocalDateTime;

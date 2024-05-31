@@ -1,6 +1,6 @@
 package io.andrelucas.toiletnearme.owner.infrastructure.jpa;
 
-import io.andrelucas.toiletnearme.customer.CustomerId;
+import io.andrelucas.toiletnearme.customer.business.CustomerId;
 import io.andrelucas.toiletnearme.owner.business.Owner;
 import io.andrelucas.toiletnearme.owner.business.OwnerId;
 import io.andrelucas.toiletnearme.toilet.business.ToiletId;

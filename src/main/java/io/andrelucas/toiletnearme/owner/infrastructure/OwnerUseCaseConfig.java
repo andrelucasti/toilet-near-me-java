@@ -1,7 +1,7 @@
 package io.andrelucas.toiletnearme.owner.infrastructure;
 
 
-import io.andrelucas.toiletnearme.customer.CustomerRepository;
+import io.andrelucas.toiletnearme.customer.business.CustomerRepository;
 import io.andrelucas.toiletnearme.owner.business.OwnerRepository;
 import io.andrelucas.toiletnearme.owner.business.usecases.CreateOwnerUseCase;
 import io.andrelucas.toiletnearme.toilet.business.repository.ToiletRepository;

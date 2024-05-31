@@ -1,8 +1,8 @@
 package io.andrelucas.toiletnearme.customer.infrastructure.jpa;
 
-import io.andrelucas.toiletnearme.customer.Customer;
-import io.andrelucas.toiletnearme.customer.CustomerId;
-import io.andrelucas.toiletnearme.customer.CustomerRepository;
+import io.andrelucas.toiletnearme.customer.business.Customer;
+import io.andrelucas.toiletnearme.customer.business.CustomerId;
+import io.andrelucas.toiletnearme.customer.business.CustomerRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

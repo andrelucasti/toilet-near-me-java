@@ -1,6 +1,6 @@
 package io.andrelucas.toiletnearme.toilet.business;
 
-import io.andrelucas.toiletnearme.customer.CustomerId;
+import io.andrelucas.toiletnearme.customer.business.CustomerId;
 import io.andrelucas.toiletnearme.toilet.business.events.ToiletCreatedEvent;
 import io.andrelucas.toiletnearme.common.AggregateRoot;
 import io.andrelucas.toiletnearme.toilet.business.events.ToiletEvent;

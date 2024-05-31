@@ -1,9 +1,9 @@
 package io.andrelucas.toiletnearme.owner.business.usecases;
 
 import io.andrelucas.toiletnearme.AbstractIntegrationTest;
-import io.andrelucas.toiletnearme.customer.Customer;
-import io.andrelucas.toiletnearme.customer.CustomerId;
-import io.andrelucas.toiletnearme.customer.CustomerRepository;
+import io.andrelucas.toiletnearme.customer.business.Customer;
+import io.andrelucas.toiletnearme.customer.business.CustomerId;
+import io.andrelucas.toiletnearme.customer.business.CustomerRepository;
 import io.andrelucas.toiletnearme.owner.business.Owner;
 import io.andrelucas.toiletnearme.owner.business.OwnerAlreadyExistsException;
 import io.andrelucas.toiletnearme.owner.business.OwnerRepository;

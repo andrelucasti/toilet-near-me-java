@@ -1,8 +1,8 @@
 package io.andrelucas.toiletnearme.business.toilet.usecases;
 
 import io.andrelucas.toiletnearme.AbstractIntegrationTest;
-import io.andrelucas.toiletnearme.customer.Customer;
-import io.andrelucas.toiletnearme.customer.CustomerId;
+import io.andrelucas.toiletnearme.customer.business.Customer;
+import io.andrelucas.toiletnearme.customer.business.CustomerId;
 import io.andrelucas.toiletnearme.toilet.business.usecases.RegisterToiletUseCase;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,7 @@
 package io.andrelucas.toiletnearme.owner.business;
 
 import io.andrelucas.toiletnearme.common.AggregateRoot;
-import io.andrelucas.toiletnearme.customer.CustomerId;
+import io.andrelucas.toiletnearme.customer.business.CustomerId;
 import io.andrelucas.toiletnearme.toilet.business.ToiletId;
 
 public record Owner(OwnerId ownerId,
