@@ -14,6 +14,7 @@ public class ItemEntity {
 
     @Id
     private UUID id;
+
     private String description;
     @Version
     private int version;
@@ -22,7 +23,9 @@ public class ItemEntity {
     public ItemEntity() {
     }
 
-    public ItemEntity(UUID id, String description, LocalDateTime updatedAt) {
+    public ItemEntity(final UUID id,
+                      final String description,
+                      final LocalDateTime updatedAt) {
         this.id = id;
         this.description = description;
         this.updatedAt = updatedAt;
@@ -32,7 +35,7 @@ public class ItemEntity {
         return new Item(ItemId.with(id.toString()), description);
     }
 
-    public static ItemEntity from(Item item) {
+    public static ItemEntity from(final Item item) {
         return new ItemEntity(UUID.fromString(item.id().value()), item.description(), LocalDateTime.now());
     }
 }

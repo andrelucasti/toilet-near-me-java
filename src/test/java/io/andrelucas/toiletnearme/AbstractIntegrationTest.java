@@ -29,6 +29,9 @@ public class AbstractIntegrationTest {
     protected CustomerRepository customerRepository;
 
     @Autowired
+    protected ToiletOutboxSpringRepository toiletOutboxSpringRepository;
+
+    @Autowired
     private ClearData clearData;
 
     @BeforeEach

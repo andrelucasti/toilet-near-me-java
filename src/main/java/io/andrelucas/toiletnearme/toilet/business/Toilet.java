@@ -1,5 +1,6 @@
 package io.andrelucas.toiletnearme.toilet.business;
 
+import io.andrelucas.toiletnearme.common.Tuple;
 import io.andrelucas.toiletnearme.customer.business.CustomerId;
 import io.andrelucas.toiletnearme.toilet.business.events.ItemCreatedEvent;
 import io.andrelucas.toiletnearme.toilet.business.events.ToiletCreatedEvent;
@@ -39,7 +40,7 @@ public record Toilet(ToiletId id,
         return toilet;
     }
 
-    public Toilet addItem(final String description) {
+    public Tuple<Toilet, Item> addItem(final String description) {
         final var newItem = Item.newItem(description);
         final var items = Set.of(newItem);
 
@@ -47,6 +48,6 @@ public record Toilet(ToiletId id,
 
         toilet.domainEvents.add(new ItemCreatedEvent(newItem.id(), this.id));
 
-        return toilet;
+        return new Tuple<>(toilet, newItem);
     }
 }

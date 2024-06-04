@@ -72,7 +72,7 @@ class ToiletTest {
     void shouldReturnANewToiletAndAToiletItemWhenAItemIsCreated() {
         final var customerId = CustomerId.newId();
         final var toilet = Toilet.newToilet("Toilet", 0.0, 0.0, customerId);
-        final var toiletWithNewItem = toilet.addItem("Soap");
+        final var toiletWithNewItem = toilet.addItem("Soap")._1();
 
         assertNotNull(toilet.id());
         assertEquals("Toilet", toilet.name());
@@ -91,7 +91,7 @@ class ToiletTest {
     void shouldSaveTheDomainEventWhenAnItemIsAdded() {
         final var customerId = CustomerId.newId();
         final var toilet = Toilet.newToilet("Toilet", 0.0, 0.0, customerId);
-        final var toiletWithNewItem = toilet.addItem("Soap");
+        final var toiletWithNewItem = toilet.addItem("Soap")._1();
 
         final var itemId = toiletWithNewItem.items().stream()
                 .findFirst()

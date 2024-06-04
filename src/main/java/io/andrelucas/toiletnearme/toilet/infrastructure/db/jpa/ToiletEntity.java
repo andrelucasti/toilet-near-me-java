@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import org.springframework.data.annotation.Version;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -27,8 +29,9 @@ public class ToiletEntity {
     @Column(name = "longitude")
     private Double longitude;
 
-    @OneToMany
-    private Set<ItemEntity> items;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "toilet_id")
+    private Set<ItemEntity> items = new HashSet<>();
 
     @Version
     private int version;
@@ -43,13 +46,11 @@ public class ToiletEntity {
                         final String description,
                         final Double latitude,
                         final Double longitude,
-                        final Set<ItemEntity> items,
                         final LocalDateTime updatedAt) {
         this.id = id;
         this.description = description;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.items = items;
         this.updatedAt = updatedAt;
     }
 
@@ -77,17 +78,23 @@ public class ToiletEntity {
         return items;
     }
 
+    public void addItem(final ItemEntity itemEntity) {
+        items.add(itemEntity);
+    }
     public static ToiletEntity from(final Toilet toilet) {
         final var itemsEntities = toilet.items().stream()
                 .map(ItemEntity::from)
                 .collect(Collectors.toSet());
 
-        return new ToiletEntity(UUID.fromString(toilet.id().value()),
+        final var toiletEntity = new ToiletEntity(UUID.fromString(toilet.id().value()),
                 toilet.name(),
                 toilet.geolocation().latitude(),
                 toilet.geolocation().longitude(),
-                itemsEntities,
                 LocalDateTime.now());
+
+        itemsEntities.forEach(toiletEntity::addItem);
+
+        return toiletEntity;
     }
 
     public Toilet toToilet() {
@@ -97,5 +104,21 @@ public class ToiletEntity {
                 .collect(Collectors.toSet());
 
         return new Toilet(ToiletId.with(id.toString()), description, geolocation, items);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ToiletEntity that = (ToiletEntity) o;
+        return version == that.version && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hashCode(id);
+        result = 31 * result + version;
+        return result;
     }
 }

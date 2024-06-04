@@ -42,14 +42,6 @@ public class ToiletRepositoryJPAImpl implements ToiletRepository {
         toiletOutboxSpringRepository.saveAll(events);
     }
 
-    private String toJson(final ToiletEvent toiletEvent) {
-        try {
-            return objectMapper.writeValueAsString(toiletEvent);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
     public Optional<Toilet> findById(final ToiletId toiletId) {
         return toiletSpringRepository.findById(UUID.fromString(toiletId.value()))
@@ -71,7 +63,23 @@ public class ToiletRepositoryJPAImpl implements ToiletRepository {
 
     @Override
     @Transactional
-    public void update(Toilet entity) {
+    public void update(final Toilet entity) {
+        final var toiletEntity = ToiletEntity.from(entity);
+        toiletSpringRepository.save(toiletEntity);
 
+        final var events = entity.domainEvents()
+                .stream()
+                .map(it -> ToiletOutboxEntity.of(it, this.toJson(it)))
+                .toList();
+
+        toiletOutboxSpringRepository.saveAll(events);
+    }
+
+    private String toJson(final ToiletEvent toiletEvent) {
+        try {
+            return objectMapper.writeValueAsString(toiletEvent);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
