@@ -24,8 +24,18 @@ public class ToiletOutboxEntity {
     @Column(name = "published")
     private boolean published;
 
+    @Column(name = "version")
+    @Version
+    private Long version;
+
+    @Column(name = "received")
+    private boolean received;
+
     @Column(name = "created_at")
     private LocalDateTime creationDate;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     public ToiletOutboxEntity() {
     }
@@ -34,12 +44,16 @@ public class ToiletOutboxEntity {
                               ToiletEventType type,
                               String content,
                               boolean published,
-                              LocalDateTime creationDate) {
+                              boolean received,
+                              LocalDateTime creationDate,
+                              LocalDateTime updatedAt) {
         this.id = id;
         this.type = type;
         this.content = content;
         this.published = published;
+        this.received = received;
         this.creationDate = creationDate;
+        this.updatedAt = updatedAt;
     }
 
 
@@ -50,7 +64,9 @@ public class ToiletOutboxEntity {
                 toiletEvent.type(),
                 content,
                 false,
-                toiletEvent.creationDate()
+                false,
+                toiletEvent.creationDate(),
+                LocalDateTime.now()
         );
     }
 
@@ -66,17 +82,32 @@ public class ToiletOutboxEntity {
         return id;
     }
 
-    public boolean isPublished() {
-        return published;
-    }
-
     public ToiletEventType getType() {
         return type;
     }
 
+    public boolean isPublished() {
+        return published;
+    }
+
     public ToiletOutboxEntity published() {
         this.published = true;
+        this.received = false;
+        this.updatedAt = LocalDateTime.now();
+
         return this;
+    }
+
+    public ToiletOutboxEntity received() {
+        this.published = true;
+        this.received = true;
+        this.updatedAt = LocalDateTime.now();
+
+        return this;
+    }
+
+    public boolean isReceived() {
+        return received;
     }
 
     @Override

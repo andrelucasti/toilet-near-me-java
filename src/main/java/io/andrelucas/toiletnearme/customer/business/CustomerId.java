@@ -11,7 +11,7 @@ public record CustomerId(String value) {
         try {
             return new CustomerId(UUID.fromString(value).toString());
         } catch (IllegalArgumentException e) {
-            throw new ValidationException("Invalid UUID value: " + value);
+            throw new ValidationException("Invalid UUID toiletId: " + value);
         }
     }
 

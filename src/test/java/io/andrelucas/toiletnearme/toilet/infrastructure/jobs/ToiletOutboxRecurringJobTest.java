@@ -57,8 +57,10 @@ class ToiletOutboxRecurringJobTest {
         final var outboxEntity = new ToiletOutboxEntity(
                 UUID.fromString("7f3c8860-612c-4600-9915-0ed945c5ade7"),
                 ToiletEventType.ToiletCreatedEvent,
-                "{\"idempotentId\":\"7f3c8860-612c-4600-9915-0ed945c5ade7\",\"type\":\"ToiletCreatedEvent\",\"toiletId\":{\"value\":\"45670d5e-639b-414e-a81c-9b7d7e001ed7\"},\"customerId\":{\"value\":\"bf522dda-3001-4bcb-b48d-60d4ad61626a\"},\"creationDate\":\"2024-05-29T15:31:10.808684\"}",
+                "{\"idempotentId\":\"7f3c8860-612c-4600-9915-0ed945c5ade7\",\"type\":\"ToiletCreatedEvent\",\"toiletId\":{\"toiletId\":\"45670d5e-639b-414e-a81c-9b7d7e001ed7\"},\"customerId\":{\"toiletId\":\"bf522dda-3001-4bcb-b48d-60d4ad61626a\"},\"creationDate\":\"2024-05-29T15:31:10.808684\"}",
                 false,
+                false,
+                LocalDateTime.parse("2024-05-29T15:31:10.808684"),
                 LocalDateTime.parse("2024-05-29T15:31:10.808684")
         );
 

@@ -17,7 +17,10 @@ CREATE TABLE toilet_outbox
     content TEXT,
     type TEXT,
     published BOOLEAN,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp
+    received BOOLEAN,
+    version INTEGER not null,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp,
+    updated_at TIMESTAMP WITH TIME ZONE not null
 );
 
 CREATE TABLE customers

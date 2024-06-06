@@ -33,7 +33,7 @@ public record Toilet(ToiletId id,
         final var geolocation = new Geolocation(latitude, longitude);
         final var toiletId = ToiletId.newId();
 
-        final var toilet = new Toilet(toiletId, name, geolocation, Set.of());
+        final var toilet = new Toilet(toiletId, name, geolocation, new HashSet<>());
 
         toilet.domainEvents().add(new ToiletCreatedEvent(toiletId, customerId));
 
@@ -42,7 +42,8 @@ public record Toilet(ToiletId id,
 
     public Tuple<Toilet, Item> addItem(final String description) {
         final var newItem = Item.newItem(description);
-        final var items = Set.of(newItem);
+
+        this.items.add(newItem);
 
         final var toilet = new Toilet(this.id, this.name, this.geolocation, items, this.domainEvents);
 

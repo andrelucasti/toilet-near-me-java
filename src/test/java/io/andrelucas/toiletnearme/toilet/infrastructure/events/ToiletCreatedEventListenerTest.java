@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -42,7 +43,9 @@ class ToiletCreatedEventListenerTest {
                 event.type(),
                 "{}",
                 false,
-                event.creationDate()
+                false,
+                event.creationDate(),
+                LocalDateTime.now()
         );
 
         when(toiletOutboxSpringRepository.findById(event.idempotentId()))
@@ -57,7 +60,9 @@ class ToiletCreatedEventListenerTest {
                 .assertAll(
                         () -> Assertions.assertEquals(event.idempotentId(), toiletOutboxEntityExpected.getId()),
                         () -> Assertions.assertEquals(event.type(), toiletOutboxEntityExpected.getType()),
-                        () -> Assertions.assertTrue(toiletOutboxEntityExpected.isPublished())
+                        () -> Assertions.assertTrue(toiletOutboxEntityExpected.isPublished()),
+                        () -> Assertions.assertTrue(toiletOutboxEntityExpected.isReceived()),
+                        () -> Assertions.assertEquals(event.creationDate(), toiletOutboxEntityExpected.getCreationDate())
                 );
     }
 
@@ -71,6 +76,8 @@ class ToiletCreatedEventListenerTest {
                 event.type(),
                 "{}",
                 false,
+                false,
+                event.creationDate(),
                 event.creationDate()
         );
 

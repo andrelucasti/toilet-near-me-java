@@ -27,7 +27,7 @@ public class ToiletCreatedEventListener {
         logger.info("Received event: {}", event);
         toiletOutboxSpringRepository.findById(event.idempotentId())
                 .ifPresent(toiletOutboxEntity -> {
-                    toiletOutboxSpringRepository.save(toiletOutboxEntity.published());
+                    toiletOutboxSpringRepository.save(toiletOutboxEntity.received());
 
                     final var  createOwnerCommand = new CreateOwnerCommand(event.customerId().value(), event.toiletId().value());
 

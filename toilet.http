@@ -8,15 +8,26 @@ Content-type: application/json
 }
 
 ###
-@customerId = "571b6ad6-58f3-47c5-8448-60db0287a9ac"
+@customerId = 1c9cb51d-4d99-44fa-93ad-5486388913af
 
 ### Create a new toilet
 POST localhost:8181/toilet
 Content-type: application/json
 
 {
-    "description": "Toilet Gym Novo",
+    "description": "Toilet Park Sul",
     "latitude": 1.0,
     "longitude": 1.0,
-    "customerId": "571b6ad6-58f3-47c5-8448-60db0287a9ac"
+    "customerId": "{{customerId}}"
+}
+
+###
+@toiletId = 75db7db1-89d5-48b7-ad53-9fb6a58bd9d7
+
+### Add a new  item
+POST localhost:8181/toilet/{{toiletId}}/item
+Content-type: application/json
+
+{
+    "description": "Item34"
 }

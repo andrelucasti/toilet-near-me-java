@@ -19,16 +19,18 @@ public class RegisterToiletUseCase {
     }
 
     //Maybe we can use EITHER data structure
-    public void execute(final Input input){
+    public Output execute(final Input input){
         final var customerId = CustomerId.with(input.customerId);
 
         customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFound("Customer does not exist"));
 
-        toiletRepository.save(
-                Toilet.newToilet(input.name(), input.latitude(), input.longitude(), customerId)
-        );
+        final var newToilet = Toilet.newToilet(input.name(), input.latitude(), input.longitude(), customerId);
+        toiletRepository.save(newToilet);
+
+        return new Output(newToilet.id().value());
     }
 
     public record Input(String name, double latitude, double longitude, String customerId) {}
+    public record Output(String toiletId) {}
 }
