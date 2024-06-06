@@ -41,7 +41,7 @@ class AddNewItemUseCaseTest {
     void shouldAddANewItemWhenToiletIsCreatedByFunctional() {
         final var capture = ArgumentCaptor.forClass(Toilet.class);
         final var toiletId = ToiletId.newId();
-        final var toiletCreated = new Toilet(toiletId, "Toilet", new Geolocation(0.0, 0.0), Collections.emptySet());
+        final var toiletCreated = new Toilet(toiletId, "Toilet", new Geolocation(0.0, 0.0), new HashSet<>());
 
         when(toiletRepository.findById(toiletId)).thenReturn(Optional.of(toiletCreated));
 
@@ -84,7 +84,7 @@ class AddNewItemUseCaseTest {
     void shouldReturnOutputWithToiletIdAndItemIdWhenTheItemIsCreated() {
         final var capture = ArgumentCaptor.forClass(Toilet.class);
         final var toiletId = ToiletId.newId();
-        final var toiletCreated = new Toilet(toiletId, "Toilet", new Geolocation(0.0, 0.0), Collections.emptySet());
+        final var toiletCreated = new Toilet(toiletId, "Toilet", new Geolocation(0.0, 0.0), new HashSet<>());
 
         when(toiletRepository.findById(toiletId)).thenReturn(Optional.of(toiletCreated));
 

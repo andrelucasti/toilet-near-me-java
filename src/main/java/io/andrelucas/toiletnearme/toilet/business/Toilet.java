@@ -42,11 +42,9 @@ public record Toilet(ToiletId id,
 
     public Tuple<Toilet, Item> addItem(final String description) {
         final var newItem = Item.newItem(description);
-
         this.items.add(newItem);
 
-        final var toilet = new Toilet(this.id, this.name, this.geolocation, items, this.domainEvents);
-
+        final var toilet = new Toilet(this.id, this.name, this.geolocation, this.items, this.domainEvents);
         toilet.domainEvents.add(new ItemCreatedEvent(newItem.id(), this.id));
 
         return new Tuple<>(toilet, newItem);

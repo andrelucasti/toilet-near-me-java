@@ -52,16 +52,16 @@ class ToiletOutboxRecurringJobTest {
     }
 
     @Test
-    void shouldPublishAllEventsWhenContainsEventsMarkedAsNotPublishedYet() {
+    void shouldPublishAllToiletCreatedEventsWhenContainsEventsMarkedAsNotPublishedYet() {
         final var captorEvent = ArgumentCaptor.forClass(ToiletEvent.class);
         final var outboxEntity = new ToiletOutboxEntity(
                 UUID.fromString("7f3c8860-612c-4600-9915-0ed945c5ade7"),
                 ToiletEventType.ToiletCreatedEvent,
-                "{\"idempotentId\":\"7f3c8860-612c-4600-9915-0ed945c5ade7\",\"type\":\"ToiletCreatedEvent\",\"toiletId\":{\"toiletId\":\"45670d5e-639b-414e-a81c-9b7d7e001ed7\"},\"customerId\":{\"toiletId\":\"bf522dda-3001-4bcb-b48d-60d4ad61626a\"},\"creationDate\":\"2024-05-29T15:31:10.808684\"}",
+                "{\"idempotentId\":\"7f3c8860-612c-4600-9915-0ed945c5ade7\",\"type\":\"ToiletCreatedEvent\",\"toiletId\":{\"value\":\"0f6278f3-a07e-40bd-867d-ab22fff5b220\"},\"customerId\":{\"value\":\"5cd63af8-87bd-4dae-8549-d0ed7d9aab15\"},\"creationDate\":\"2024-06-06T22:33:48.673915\"}",
                 false,
                 false,
-                LocalDateTime.parse("2024-05-29T15:31:10.808684"),
-                LocalDateTime.parse("2024-05-29T15:31:10.808684")
+                LocalDateTime.parse("2024-06-06T22:33:48.673915"),
+                LocalDateTime.parse("2024-06-06T23:33:48.673915")
         );
 
         final var toiletOutboxEntities = List.of(
@@ -78,6 +78,37 @@ class ToiletOutboxRecurringJobTest {
                 () -> Assertions.assertEquals(outboxEntity.getType(), event.type()),
                 () -> Assertions.assertEquals(outboxEntity.getType(), event.type()),
                 () -> Assertions.assertInstanceOf(ToiletCreatedEvent.class, event),
+                () -> Assertions.assertEquals(outboxEntity.getCreationDate(), event.creationDate())
+        );
+    }
+
+    @Test
+    void shouldPublishAllItemCreatedEventsWhenContainsEventsMarkedAsNotPublishedYet() {
+        final var captorEvent = ArgumentCaptor.forClass(ToiletEvent.class);
+        final var outboxEntity = new ToiletOutboxEntity(
+                UUID.fromString("989b7190-bc4e-4023-b0fa-a1cb83b33c56"),
+                ToiletEventType.ItemCreatedEvent,
+                "{\"idempotentId\":\"989b7190-bc4e-4023-b0fa-a1cb83b33c56\",\"type\":\"ItemCreatedEvent\",\"itemId\":{\"value\":\"0f6278f3-a07e-40bd-867d-ab22fff5b220\"},\"toiletId\":{\"value\":\"5cd63af8-87bd-4dae-8549-d0ed7d9aab15\"},\"creationDate\":\"2024-06-06T22:33:48.673915\"}",
+                false,
+                false,
+                LocalDateTime.parse("2024-06-06T22:33:48.673915"),
+                LocalDateTime.parse("2024-06-06T23:33:48.673915")
+        );
+
+        final var toiletOutboxEntities = List.of(
+                outboxEntity
+        );
+
+        when(toiletOutboxSpringRepository.findAllByPublishedFalse()).thenReturn(toiletOutboxEntities);
+        toiletOutboxRecurringJob.execute();
+
+        verify(toiletEventPublisher, times(1)).publish(captorEvent.capture());
+        final var event = captorEvent.getValue();
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(outboxEntity.getId(), event.idempotentId()),
+                () -> Assertions.assertEquals(outboxEntity.getType(), event.type()),
+                () -> Assertions.assertEquals(outboxEntity.getType(), event.type()),
+                () -> Assertions.assertInstanceOf(ItemCreatedEvent.class, event),
                 () -> Assertions.assertEquals(outboxEntity.getCreationDate(), event.creationDate())
         );
     }
