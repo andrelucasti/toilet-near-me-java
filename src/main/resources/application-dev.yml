@@ -2,12 +2,16 @@ spring:
   application:
     name: toilet-near-me
   datasource:
-    url: jdbc:postgresql://localhost:5432/toilet
+    url: jdbc:postgresql://db:5432/toilet
     username: toilet
     password: toilet
   jpa:
     show-sql: false
     open-in-view: false
+
+otel:
+  exporter:
+    endpoint: http://otel-collector:4317
 
 server:
   port: 8181
@@ -15,6 +19,8 @@ org:
   jobrunr:
     background-job-server:
       enabled: true
+      worker-count: 2
+      poll-interval-in-seconds: 2
     dashboard:
       enabled: true
       port: 8010

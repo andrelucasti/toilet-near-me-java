@@ -1,5 +1,5 @@
 ### Create a new customer
-POST localhost:8181/customer
+POST localhost:9999/customer
 Content-type: application/json
 
 {
@@ -8,26 +8,26 @@ Content-type: application/json
 }
 
 ###
-@customerId = 1c9cb51d-4d99-44fa-93ad-5486388913af
+@customerId = 8a505e82-47b0-4ab2-9728-76404f33a645
 
 ### Create a new toilet
-POST localhost:8181/toilet
+POST localhost:9999/toilet
 Content-type: application/json
 
 {
-    "description": "Toilet Park Sul",
-    "latitude": 1.0,
-    "longitude": 1.0,
+    "description": "Toilet dasdasd asdad",
+    "latitude": 1.333,
+    "longitude": 1.333,
     "customerId": "{{customerId}}"
 }
 
 ###
-@toiletId = 75db7db1-89d5-48b7-ad53-9fb6a58bd9d7
+@toiletId = 70b1ca1b-8aa6-41e3-b038-5acdba0f0945
 
 ### Add a new  item
-POST localhost:8181/toilet/{{toiletId}}/item
+POST localhost:9999/toilet/{{toiletId}}/item
 Content-type: application/json
 
 {
-    "description": "Item34"
+    "description": "Item35"
 }

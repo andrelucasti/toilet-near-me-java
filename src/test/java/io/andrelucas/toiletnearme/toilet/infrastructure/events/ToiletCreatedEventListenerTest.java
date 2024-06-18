@@ -8,6 +8,7 @@ import io.andrelucas.toiletnearme.toilet.business.events.ToiletCreatedEvent;
 import io.andrelucas.toiletnearme.toilet.infrastructure.db.jpa.ToiletOutboxEntity;
 import io.andrelucas.toiletnearme.toilet.infrastructure.db.jpa.ToiletOutboxSpringRepository;
 import io.andrelucas.toiletnearme.toilet.infrastructure.events.internal.listeners.ToiletCreatedEventListener;
+import io.opentelemetry.api.OpenTelemetry;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,8 +31,7 @@ class ToiletCreatedEventListenerTest {
     void setUp() {
         ownerCommandPublisher = mock(OwnerCommandPublisher.class);
         toiletOutboxSpringRepository = mock(ToiletOutboxSpringRepository.class);
-
-        subject = new ToiletCreatedEventListener(toiletOutboxSpringRepository, ownerCommandPublisher);
+        subject = new ToiletCreatedEventListener(toiletOutboxSpringRepository, ownerCommandPublisher, mock(OpenTelemetry.class));
     }
 
     @Test

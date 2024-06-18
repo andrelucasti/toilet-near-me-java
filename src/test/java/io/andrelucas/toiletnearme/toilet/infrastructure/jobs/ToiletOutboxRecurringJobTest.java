@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.andrelucas.toiletnearme.toilet.business.events.*;
 import io.andrelucas.toiletnearme.toilet.infrastructure.db.jpa.ToiletOutboxEntity;
 import io.andrelucas.toiletnearme.toilet.infrastructure.db.jpa.ToiletOutboxSpringRepository;
+import io.opentelemetry.api.OpenTelemetry;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,7 @@ class ToiletOutboxRecurringJobTest {
     private ToiletOutboxRecurringJob toiletOutboxRecurringJob;
     private ToiletOutboxSpringRepository toiletOutboxSpringRepository;
     private ToiletEventPublisher toiletEventPublisher;
+    private OpenTelemetry openTelemetry;
 
     @BeforeEach
     void setUp() {
@@ -32,7 +34,8 @@ class ToiletOutboxRecurringJobTest {
 
         toiletOutboxSpringRepository = mock(ToiletOutboxSpringRepository.class);
         toiletEventPublisher = mock(ToiletEventPublisher.class);
-        toiletOutboxRecurringJob = new ToiletOutboxRecurringJob(toiletOutboxSpringRepository, toiletEventPublisher, new ToiletEventFactory(objectMapper));
+        openTelemetry = mock(OpenTelemetry.class);
+        toiletOutboxRecurringJob = new ToiletOutboxRecurringJob(toiletOutboxSpringRepository, toiletEventPublisher, new ToiletEventFactory(objectMapper), openTelemetry);
     }
 
     @Test
