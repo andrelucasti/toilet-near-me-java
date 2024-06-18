@@ -30,7 +30,7 @@ public class ToiletOutboxRecurringJob {
         this.toiletEventFactory = toiletEventFactory;
     }
 
-    @Recurring(id = "toilet-outbox-recurring-job", cron = "0 * * * *")
+    @Recurring(id = "toilet-outbox-recurring-job", cron = "* * * * *")
     @Job(name = "Toilet Outbox Job")
     public void execute() {
         toiletOutboxSpringRepository.findAllByPublishedFalse()

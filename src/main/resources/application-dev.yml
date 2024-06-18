@@ -20,7 +20,7 @@ org:
     background-job-server:
       enabled: true
       worker-count: 2
-      poll-interval-in-seconds: 2
+      poll-interval-in-seconds: 6
     dashboard:
       enabled: true
       port: 8010

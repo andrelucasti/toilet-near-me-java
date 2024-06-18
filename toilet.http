@@ -3,26 +3,26 @@ POST localhost:9999/customer
 Content-type: application/json
 
 {
-  "name": "Andre Lucas IO",
+  "name": "Andre Lucas AI",
   "email": "andrelucastic@gmail.com"
 }
 
 ###
-@customerId = 8a505e82-47b0-4ab2-9728-76404f33a645
+@customerId = fb78a96c-cfc8-4c64-b70f-985cee229ee3
 
 ### Create a new toilet
 POST localhost:9999/toilet
 Content-type: application/json
 
 {
-    "description": "Toilet dasdasd asdad",
-    "latitude": 1.333,
-    "longitude": 1.333,
+    "description": "Toilet 1",
+    "latitude": 9.4323,
+    "longitude": -19.333,
     "customerId": "{{customerId}}"
 }
 
 ###
-@toiletId = 70b1ca1b-8aa6-41e3-b038-5acdba0f0945
+@toiletId = c9c87ce4-9c5d-44d4-9abb-19a6a3d1c6f8
 
 ### Add a new  item
 POST localhost:9999/toilet/{{toiletId}}/item
