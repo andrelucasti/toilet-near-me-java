@@ -57,7 +57,7 @@ public class ToiletController {
 
         try(final var scope = span.makeCurrent()) {
             final var input = new RegisterToiletUseCase
-                    .Input(request.description(), request.latitude(), request.longitude(), request.customerId());
+                    .Input(request.description(), request.latitude(), request.longitude(), request.price(), request.customerId());
 
             final var output = registerToiletUseCase.execute(input);
 

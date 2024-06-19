@@ -52,7 +52,7 @@ class CreateOwnerUseCaseTest {
     void shouldThrowExceptionWhenCustomerIsNotFound() {
         final var customerId = UUID.randomUUID().toString();
         final var toiletId = UUID.randomUUID().toString();
-        final var toilet = new Toilet(ToiletId.with(toiletId), "ToiletZin", new Geolocation(0, 0), Collections.emptySet());
+        final var toilet = new Toilet(ToiletId.with(toiletId), "ToiletZin", new Geolocation(0, 0), 0, Collections.emptySet());
 
         when(toiletRepository.findById(ToiletId.with(toiletId))).thenReturn(Optional.of(toilet));
         when(customerRepository.findById(CustomerId.with(customerId))).thenReturn(Optional.empty());
@@ -67,7 +67,7 @@ class CreateOwnerUseCaseTest {
         final var captor = ArgumentCaptor.forClass(Owner.class);
         final var customerId = UUID.randomUUID().toString();
         final var toiletId = UUID.randomUUID().toString();
-        final var toilet = new Toilet(ToiletId.with(toiletId), "ToiletZin", new Geolocation(0, 0), Collections.emptySet());
+        final var toilet = new Toilet(ToiletId.with(toiletId), "ToiletZin", new Geolocation(0, 0), 0, Collections.emptySet());
         final var customer = new Customer(CustomerId.with(customerId), "CustomerZin", "customer@gmail.com");
 
         when(toiletRepository.findById(ToiletId.with(toiletId))).thenReturn(Optional.of(toilet));

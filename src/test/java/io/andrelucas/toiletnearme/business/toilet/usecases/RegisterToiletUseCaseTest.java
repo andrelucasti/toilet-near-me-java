@@ -34,7 +34,7 @@ class RegisterToiletUseCaseTest {
         final var captor = ArgumentCaptor.forClass(Toilet.class);
         final var customerId = CustomerId.newId();
         final var customer = new Customer(customerId, "Customer", "customer@Customer.com");
-        final var input = new RegisterToiletUseCase.Input("Toilet", 0.0, 0.0, customerId.value());
+        final var input = new RegisterToiletUseCase.Input("Toilet", 0.0, 0.0, 0, customerId.value());
 
         when(customerRepository.findById(customerId)).thenReturn(Optional.of(customer));
 
@@ -53,7 +53,7 @@ class RegisterToiletUseCaseTest {
     @Test
     void shouldNotCreateAToiletAndThrowExceptionWhenDoesNotExistTheCustomer() {
         final var customerId = CustomerId.newId();
-        final var input = new RegisterToiletUseCase.Input("Toilet", 0.0, 0.0, customerId.value());
+        final var input = new RegisterToiletUseCase.Input("Toilet", 0.0, 0.0, 0, customerId.value());
 
         when(customerRepository.findById(customerId)).thenReturn(Optional.empty());
         Assertions.assertThrows(CustomerNotFound.class, () -> registerToiletUseCase.execute(input));

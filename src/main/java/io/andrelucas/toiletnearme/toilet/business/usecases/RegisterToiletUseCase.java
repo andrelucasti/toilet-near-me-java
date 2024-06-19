@@ -25,12 +25,12 @@ public class RegisterToiletUseCase {
         customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFound("Customer does not exist"));
 
-        final var newToilet = Toilet.newToilet(input.name(), input.latitude(), input.longitude(), customerId);
+        final var newToilet = Toilet.newToilet(input.name(), input.latitude(), input.longitude(), input.price(), customerId);
         toiletRepository.save(newToilet);
 
         return new Output(newToilet.id().value());
     }
 
-    public record Input(String name, double latitude, double longitude, String customerId) {}
+    public record Input(String name, double latitude, double longitude, long price, String customerId) {}
     public record Output(String toiletId) {}
 }

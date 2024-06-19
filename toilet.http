@@ -8,10 +8,10 @@ Content-type: application/json
 }
 
 ###
-@customerId = fb78a96c-cfc8-4c64-b70f-985cee229ee3
+@customerId = 37746893-c181-4ebc-ac9f-3f8988542d30
 
 ### Create a new toilet
-POST localhost:9999/toilet
+POST localhost:8181/toilet
 Content-type: application/json
 
 {

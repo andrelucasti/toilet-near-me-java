@@ -38,7 +38,7 @@ class CreateOwnerUseCaseIntegrationTest extends AbstractIntegrationTest {
         final var customer = new Customer(CustomerId.newId(), "andre", "andre@gmail.com");
         customerRepository.save(customer);
 
-        final var toilet = new Toilet(ToiletId.newId(), "toilet", new Geolocation(0.0, 0.0), Collections.emptySet());
+        final var toilet = new Toilet(ToiletId.newId(), "toilet", new Geolocation(0.0, 0.0), 0, Collections.emptySet());
         toiletRepository.save(toilet);
 
         final var input = new CreateOwnerUseCase.Input(customer.id().value(), toilet.id().value());
@@ -61,13 +61,13 @@ class CreateOwnerUseCaseIntegrationTest extends AbstractIntegrationTest {
         final var customer = new Customer(CustomerId.newId(), "andre", "andre@gmail.com");
         customerRepository.save(customer);
 
-        final var toilet = new Toilet(ToiletId.newId(), "toilet", new Geolocation(0.0, 0.0), Collections.emptySet());
+        final var toilet = new Toilet(ToiletId.newId(), "toilet", new Geolocation(0.0, 0.0), 0, Collections.emptySet());
         toiletRepository.save(toilet);
 
         final var input = new CreateOwnerUseCase.Input(customer.id().value(), toilet.id().value());
         createOwnerUseCase.execute(input);
 
-        final var toilet2 = new Toilet(ToiletId.newId(), "toilet2", new Geolocation(0.0, 0.0), Collections.emptySet());
+        final var toilet2 = new Toilet(ToiletId.newId(), "toilet2", new Geolocation(0.0, 0.0), 0, Collections.emptySet());
         toiletRepository.save(toilet2);
 
         final var input2 = new CreateOwnerUseCase.Input(customer.id().value(), toilet2.id().value());
@@ -93,7 +93,7 @@ class CreateOwnerUseCaseIntegrationTest extends AbstractIntegrationTest {
     void shouldNotBeOwnershipWithMoreThanAnOwner() {
         final var createOwnerUseCase = new CreateOwnerUseCase(customerRepository, toiletRepository, ownerRepository);
 
-        final var toilet = new Toilet(ToiletId.newId(), "toilet", new Geolocation(0.0, 0.0), Collections.emptySet());
+        final var toilet = new Toilet(ToiletId.newId(), "toilet", new Geolocation(0.0, 0.0), 0, Collections.emptySet());
         toiletRepository.save(toilet);
 
         final var customer1 = new Customer(CustomerId.newId(), "andre", "andre@gmail.com");

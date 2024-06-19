@@ -19,7 +19,8 @@ class AddNewItemUseCaseIntegrationTest extends AbstractIntegrationTest {
     @Test
     void shouldSaveItemWhenToiletIsUpdated() {
         final var toiletId = ToiletId.newId();
-        final var toilet = new Toilet(toiletId, "Toilet", new Geolocation(0.0, 0.0), Set.of(), Set.of(new ToiletCreatedEvent(toiletId, CustomerId.newId()))) ;
+        final var toilet = new Toilet(toiletId, "Toilet", new Geolocation(0.0, 0.0), 0L,
+                Set.of(), Set.of(new ToiletCreatedEvent(toiletId, CustomerId.newId()))) ;
         toiletRepository.save(toilet);
 
         final var input = new AddNewItemUseCase.Input("Soap", toilet.id().value());
@@ -37,7 +38,7 @@ class AddNewItemUseCaseIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void shouldRegisterEventInTheOutboxingTableWhenTheToiletIsUpdated() {
-        final var toilet = new Toilet(ToiletId.newId(), "Toilet", new Geolocation(0.0, 0.0), Set.of());
+        final var toilet = new Toilet(ToiletId.newId(), "Toilet", new Geolocation(0.0, 0.0), 0, Set.of());
         toiletRepository.save(toilet);
 
         final var input = new AddNewItemUseCase.Input("Soap", toilet.id().value());

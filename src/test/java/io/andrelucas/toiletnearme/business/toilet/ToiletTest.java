@@ -4,6 +4,7 @@ import io.andrelucas.toiletnearme.customer.business.CustomerId;
 import io.andrelucas.toiletnearme.toilet.business.GeolocationInvalidException;
 import io.andrelucas.toiletnearme.toilet.business.Item;
 import io.andrelucas.toiletnearme.toilet.business.Toilet;
+import io.andrelucas.toiletnearme.toilet.business.ToiletType;
 import io.andrelucas.toiletnearme.toilet.business.events.ToiletCreatedEvent;
 import io.andrelucas.toiletnearme.toilet.business.events.ToiletEvent;
 import io.andrelucas.toiletnearme.toilet.business.events.ToiletEventType;
@@ -21,7 +22,7 @@ class ToiletTest {
     @Test
     void shouldReturnANewToilet() {
         final var customerId = CustomerId.newId();
-        final var toilet = Toilet.newToilet("Toilet", 0.0, 0.0, customerId);
+        final var toilet = Toilet.newToilet("Toilet", 0.0, 0.0, 0, customerId);
 
         assertNotNull(toilet.id());
         assertEquals("Toilet", toilet.name());
@@ -31,18 +32,18 @@ class ToiletTest {
 
     @Test
     void shouldThrowExceptionWhenLatitudeIsInvalid() {
-        Assertions.assertThrows(GeolocationInvalidException.class, () -> Toilet.newToilet("Toilet", 91.0, 0.0,  CustomerId.newId()));
+        Assertions.assertThrows(GeolocationInvalidException.class, () -> Toilet.newToilet("Toilet", 91.0, 0.0,  0, CustomerId.newId()));
     }
 
     @Test
     void shouldThrowExceptionWhenLongitudeIsInvalid() {
-        Assertions.assertThrows(GeolocationInvalidException.class, () -> Toilet.newToilet("Toilet", 0.0, 181.0, CustomerId.newId()));
+        Assertions.assertThrows(GeolocationInvalidException.class, () -> Toilet.newToilet("Toilet", 0.0, 181.0, 0, CustomerId.newId()));
     }
 
     @Test
     void shouldSaveTheDomainEventToiletCreatedWhenAToiletIsCreated() {
         final var customerId = CustomerId.newId();
-        final var toilet = Toilet.newToilet("Toilet", 33.065, 89.0, customerId);
+        final var toilet = Toilet.newToilet("Toilet", 33.065, 89.0, 0, customerId);
 
 
         Assertions.assertAll(
@@ -71,7 +72,7 @@ class ToiletTest {
     @Test
     void shouldReturnANewToiletAndAToiletItemWhenAItemIsCreated() {
         final var customerId = CustomerId.newId();
-        final var toilet = Toilet.newToilet("Toilet", 0.0, 0.0, customerId);
+        final var toilet = Toilet.newToilet("Toilet", 0.0, 0.0, 0, customerId);
         final var toiletWithNewItem = toilet.addItem("Soap")._1();
 
         assertNotNull(toilet.id());
@@ -88,9 +89,27 @@ class ToiletTest {
     }
 
     @Test
+    void shouldCreateAFreeToiletWhenItDoesNotHavePrice() {
+        final var customerId = CustomerId.newId();
+        final var toilet = Toilet.newToilet("Toilet", 0.0, 0.0, 0, customerId);
+
+        assertEquals(ToiletType.FREE, toilet.toiletType());
+        assertEquals(0L, toilet.price());
+    }
+
+    @Test
+    void shouldCreateAPaidToiletWhenItDoesHavePrice() {
+        final var customerId = CustomerId.newId();
+        final var toilet = Toilet.newToilet("Toilet", 0.0, 0.0, 10, customerId);
+
+        assertEquals(ToiletType.PAID, toilet.toiletType());
+        assertEquals(10L, toilet.price());
+    }
+
+    @Test
     void shouldSaveTheDomainEventWhenAnItemIsAdded() {
         final var customerId = CustomerId.newId();
-        final var toilet = Toilet.newToilet("Toilet", 0.0, 0.0, customerId);
+        final var toilet = Toilet.newToilet("Toilet", 0.0, 0.0, 0, customerId);
         final var toiletWithNewItem = toilet.addItem("Soap")._1();
 
         final var itemId = toiletWithNewItem.items().stream()

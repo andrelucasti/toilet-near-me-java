@@ -1,5 +1,6 @@
 package io.andrelucas.toiletnearme.common.infrastrucuture.config;
 
+import io.opentelemetry.api.GlobalOpenTelemetry;
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.exporter.otlp.logs.OtlpGrpcLogRecordExporter;
 import io.opentelemetry.exporter.otlp.metrics.OtlpGrpcMetricExporter;
@@ -69,7 +70,7 @@ public class OtelConfiguration {
                 .setTracerProvider(sdkTracerProvider)
                 .setMeterProvider(sdkMeterProvider)
                 .setLoggerProvider(sdkLoggerProvider)
-                .buildAndRegisterGlobal();
+                .build();
 
         Runtime.getRuntime().addShutdownHook(new Thread(openTelemetrySdk::shutdown));
 
