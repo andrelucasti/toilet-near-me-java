@@ -18,29 +18,17 @@ public class ToiletCreatedEventListener {
     private static final Logger logger = LoggerFactory.getLogger(ToiletCreatedEventListener.class);
     private final ToiletOutboxSpringRepository toiletOutboxSpringRepository;
     private final OwnerCommandPublisher ownerCommandPublisher;
-    private final OpenTelemetry openTelemetry;
-
 
     public ToiletCreatedEventListener(final ToiletOutboxSpringRepository toiletOutboxSpringRepository,
                                       final OwnerCommandPublisher ownerCommandPublisher,
                                       final OpenTelemetry openTelemetry) {
         this.ownerCommandPublisher = ownerCommandPublisher;
         this.toiletOutboxSpringRepository = toiletOutboxSpringRepository;
-        this.openTelemetry = openTelemetry;
     }
 
     @EventListener
     public void handler(final ToiletCreatedEvent event) {
         logger.info("Received event: {}", event);
-
-        final var span = openTelemetry.getTracer("toilet-near-me-spring")
-                .spanBuilder("ToiletCreatedEventListener")
-                .setParent(Context.current())
-                .setAttribute("event", event.type().name())
-                .setAttribute("idempotentId", event.idempotentId().toString())
-                .setAttribute("listener","listener")
-                .startSpan();
-
         toiletOutboxSpringRepository.findById(event.idempotentId())
                 .ifPresent(toiletOutboxEntity -> {
                     toiletOutboxSpringRepository.save(toiletOutboxEntity.received());
@@ -51,6 +39,5 @@ public class ToiletCreatedEventListener {
                     ownerCommandPublisher.publish(createOwnerCommand);
                 });
 
-        span.end();
     }
 }

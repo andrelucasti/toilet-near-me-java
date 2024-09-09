@@ -22,41 +22,25 @@ public class ToiletRepositoryJPAImpl implements ToiletRepository {
     private final ToiletSpringRepository toiletSpringRepository;
     private final ToiletOutboxSpringRepository toiletOutboxSpringRepository;
     private final ObjectMapper objectMapper;
-    private final OpenTelemetry openTelemetry;
-
     public ToiletRepositoryJPAImpl(final ToiletSpringRepository toiletSpringRepository,
                                    final ToiletOutboxSpringRepository toiletOutboxSpringRepository,
                                    final ObjectMapper objectMapper, OpenTelemetry openTelemetry) {
         this.toiletSpringRepository = toiletSpringRepository;
         this.toiletOutboxSpringRepository = toiletOutboxSpringRepository;
         this.objectMapper = objectMapper;
-        this.openTelemetry = openTelemetry;
     }
 
     @Override
     @Transactional
     public void save(final Toilet toilet) {
-        final var span = openTelemetry.getTracer("toilet-near-me-spring")
-                .spanBuilder("OutboxRepository")
-                .setParent(Context.current())
-                .startSpan();
-
         final var toiletEntity = ToiletEntity.from(toilet);
         toiletSpringRepository.save(toiletEntity);
 
         final var events = toilet.domainEvents()
                 .stream()
-                .map(it -> {
-                    span.setAttribute("toiletId", toilet.id().value());
-                    span.setAttribute("domain.event", it.type().name());
-                    span.setAttribute("idempotentId", it.idempotentId().toString());
-                    span.setAttribute("customerId", it.attributes().get("customerId"));
-                    return ToiletOutboxEntity.of(it, this.toJson(it));
-                }).toList();
+                .map(it -> ToiletOutboxEntity.of(it, this.toJson(it))).toList();
 
         toiletOutboxSpringRepository.saveAll(events);
-
-        span.end();
     }
 
     @Override
