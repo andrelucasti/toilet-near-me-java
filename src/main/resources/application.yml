@@ -2,17 +2,24 @@ spring:
   application:
     name: toilet-near-me
   datasource:
-    url: jdbc:postgresql://localhost:5432/toilet
-    username: toilet
-    password: toilet
+    hikari:
+      jdbcUrl: jdbc:postgresql://localhost:5432/toilet
+      username: toilet
+      password: toilet
+      driver-class-name: org.postgresql.Driver
+      pool-name: toilet
+      minimum-idle: 1
+      maximum-pool-size: 5
+      connection-timeout: 5000
+  flyway:
+    enabled: true # This is not recommended to production environment, the best way is to have the migration step in pipeline
+    locations: db/migration
   jpa:
-    show-sql: false
+    show-sql: true
     open-in-view: false
-
-
 otel:
   exporter:
-      endpoint: http://localhost:4317
+    endpoint: http://otel-collector:4317
 
 server:
   port: 8181
@@ -20,6 +27,8 @@ org:
   jobrunr:
     background-job-server:
       enabled: true
+      worker-count: 2
+      poll-interval-in-seconds: 6
     dashboard:
       enabled: true
       port: 8010

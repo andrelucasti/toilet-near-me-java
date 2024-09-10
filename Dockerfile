@@ -12,4 +12,4 @@ EXPOSE 8181
 EXPOSE 8010
 
 ENTRYPOINT java -jar "application.jar" \
-            -Dspring.profiles.active=$SPRING_PROFILES_ACTIVE
+            -Dspring.profiles.active=$SPRING_PROFILES_ACTIVE \

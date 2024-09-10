@@ -30,8 +30,8 @@ dependencies {
     implementation 'io.opentelemetry.semconv:opentelemetry-semconv:1.25.0-alpha'
     implementation 'io.opentelemetry:opentelemetry-sdk-extension-autoconfigure'
 
-    //implementation 'org.flywaydb:flyway-core'
-    //implementation 'org.flywaydb:flyway-database-postgresql'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-database-postgresql'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'
     implementation 'org.openjdk.jmh:jmh-core:1.37'

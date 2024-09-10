@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: toilet
+  labels:
+    app: toilet
+spec:
+  selector:
+    matchLabels:
+      app: toilet
+  template:
+    metadata:
+        labels:
+            app: toilet
+    spec:
+      containers:
+        - name: toilet
+          image: andrelucastic/toilet-near-me-java:1.0.0
+          ports:
+              - containerPort: 8181
+          resources:
+            requests:
+              memory: "400Mi"
+              cpu: "200m"
+            limits:
+              memory: "800Mi"
+              cpu: "500m"
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgresql.toilet-near-me:5432/toilet
+            - name: SPRING_DATASOURCE_USERNAME
+              value: toilet
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: toilet
+            - name: OTEL_EXPORTER_ENDPOINT
+              value: http://otel-collector:4317
+
