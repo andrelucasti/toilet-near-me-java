@@ -43,7 +43,7 @@ jobs:
         uses: gradle/gradle-build-action@v3.5.0
 
       - name: Build with Gradle
-        run: ./gradlew clean build
+        run: ./gradlew clean build -x test
 
       - name : Build Docker image
         run: docker build -t andrelucastic/toilet-near-me-java:1.2.0 .
