@@ -19,7 +19,7 @@ jobs:
           java-version: '17'
 
       - name: Set up gradle
-        uses: gradle/actions@v4.0.1
+        uses: gradle/gradle-build-action@v3.5.0
 
       - name: Test with Gradle
         run: ./gradlew test
