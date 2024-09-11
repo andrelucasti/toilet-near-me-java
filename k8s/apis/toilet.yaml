@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: toilet-api
+  annotations:
+    kubernetes.io/ingress.class: "kong"
+    konghq.com/override: do-not-preserve-host
+    konghq.com/plugins: toilet-rate-limit,prometheus
+    prometheus.io/scrape: "true"
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              service:
+                name: toilet
+                port:
+                  number: 8181
+            pathType: Prefix
+            path: /
+
+
+
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongIngress
+metadata:
+  name: toilet-do-not-preserve-host
+upstream:
+  host_header: toilet.svc.cluster.local

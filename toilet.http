@@ -1,31 +1,31 @@
 ### Create a new customer
-POST localhost:8181/customer
+POST localhost/customer
 Content-type: application/json
 
 {
-  "name": "Andre Lucas AI",
+  "name": "Andre Lucas Ingress",
   "email": "andrelucastic@gmail.com"
 }
 
 ###
-@customerId = 37746893-c181-4ebc-ac9f-3f8988542d30
+@customerId = b4c1fbe4-3016-415b-bb37-b75f4915d8ef
 
 ### Create a new toilet
 POST localhost/toilet
 Content-type: application/json
 
 {
-    "description": "Toilet 1",
+    "description": "Toilet Ingress 5",
     "latitude": 9.4323,
     "longitude": -19.333,
     "customerId": "{{customerId}}"
 }
 
 ###
-@toiletId = c9c87ce4-9c5d-44d4-9abb-19a6a3d1c6f8
+@toiletId = 94ff253e-65a8-40cb-9c55-260faa1a6b45
 
 ### Add a new  item
-POST localhost/toilet/{{toiletId}}/item
+POST localhost:8181/toilet/{{toiletId}}/item
 Content-type: application/json
 
 {

@@ -1,0 +1,95 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8181
+  description: Generated server url
+paths:
+  /toilet:
+    post:
+      tags:
+      - toilet-controller
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateToiletRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+  /toilet/{toiletId}/item:
+    post:
+      tags:
+      - toilet-controller
+      operationId: addNewItem
+      parameters:
+      - name: toiletId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddNewItemRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ItemId"
+  /customer:
+    post:
+      tags:
+      - customer-controller
+      operationId: create_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCustomerRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    CreateToiletRequest:
+      type: object
+      properties:
+        description:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        price:
+          type: integer
+          format: int64
+        customerId:
+          type: string
+    AddNewItemRequest:
+      type: object
+      properties:
+        description:
+          type: string
+    ItemId:
+      type: object
+      properties:
+        value:
+          type: string
+    CreateCustomerRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
