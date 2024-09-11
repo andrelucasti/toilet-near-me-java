@@ -7,7 +7,7 @@ metadata:
 spec:
   selector:
       matchLabels:
-      app: toilet
+        app: toilet
   endpoints:
   - port: http
     interval: 5s
