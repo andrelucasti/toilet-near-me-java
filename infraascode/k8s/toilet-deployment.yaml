@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: toilet
-          image: andrelucastic/toilet-near-me-java:1.0.0
+          image: andrelucastic/toilet-near-me-java:1.1.0
           ports:
               - containerPort: 8181
           resources:

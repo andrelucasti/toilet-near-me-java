@@ -32,3 +32,9 @@ org:
     dashboard:
       enabled: true
       port: 8010
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,prometheus,httptrace"
