@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: toilet
+  labels:
+    app: toilet
+spec:
+  selector:
+      matchLabels:
+      app: toilet
+  endpoints:
+  - port: http
+    interval: 5s
+    path: /actuator/metrics
