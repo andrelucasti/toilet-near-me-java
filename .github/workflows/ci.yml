@@ -18,10 +18,13 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Setup DB
+        run: docker run -d --name postgresql.toilet-near-me -e POSTGRES_PASSWORD=toilet -e POSTGRES_USER=toilet -e POSTGRES_DB=toilet -p 5432:5432 postgres:latest
+
       - name: Set up gradle
         uses: gradle/gradle-build-action@v3.5.0
 
       - name: Test with Gradle
-        run: ./gradlew test
+        run: ./gradlew clean test
 
 

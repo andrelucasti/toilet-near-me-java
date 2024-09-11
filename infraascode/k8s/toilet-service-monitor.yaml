@@ -12,4 +12,3 @@ spec:
   - port: http
     interval: 5s
     path: /actuator/prometheus
-§
