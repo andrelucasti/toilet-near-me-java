@@ -66,6 +66,11 @@ public class ToiletController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity<String> getToilet() {
+        return ResponseEntity.ok("Toilet");
+    }
+
     @PostMapping("/{toiletId}/item")
     public ResponseEntity<ItemId> addNewItem(@RequestBody final AddNewItemRequest request,
                                              @PathVariable("toiletId") final String toiletId){
