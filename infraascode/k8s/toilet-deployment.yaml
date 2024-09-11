@@ -5,6 +5,7 @@ metadata:
   labels:
     app: toilet
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: toilet
@@ -15,7 +16,8 @@ spec:
     spec:
       containers:
         - name: toilet
-          image: andrelucastic/toilet-near-me-java:1.2.1
+          image: andrelucastic/toilet-near-me-java:1.2.2
+          imagePullPolicy: Always
           ports:
               - containerPort: 8181
           resources:
