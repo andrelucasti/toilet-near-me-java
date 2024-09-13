@@ -26,7 +26,12 @@ spec:
             httpGet:
               path: /actuator/health
               port: 8181
-
+          readinessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            httpGet:
+              path: /actuator/health
+              port: 8181
           resources:
             requests:
               memory: "400Mi"
