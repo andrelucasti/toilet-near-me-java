@@ -7,7 +7,6 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: toilet
-
   minReplicas: 1
   maxReplicas: 1
   targetCPUUtilizationPercentage: 40
