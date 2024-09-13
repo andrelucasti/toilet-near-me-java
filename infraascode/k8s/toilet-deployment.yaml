@@ -20,6 +20,13 @@ spec:
           imagePullPolicy: Always
           ports:
               - containerPort: 8181
+          livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            httpGet:
+              path: /actuator/health
+              port: 8181
+
           resources:
             requests:
               memory: "400Mi"
@@ -44,4 +51,5 @@ spec:
               value: "5000"
             - name: OTEL_EXPORTER_ENDPOINT
               value: http://otel-collector:4317
+
 
