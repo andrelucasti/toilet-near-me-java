@@ -39,5 +39,5 @@ helm install postgresql bitnami/postgresql --version 15.5.28 --namespace postgre
 
 ### 6 - Add application to argocd
 ```shell
-kubectl apply -n argocd -f infraascode/argocd/toilet-argo-java.yaml
+kubectl apply -n argocd -f infraascode/argocd/toilet-argo.yaml
 ```
