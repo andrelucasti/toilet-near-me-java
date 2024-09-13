@@ -21,14 +21,11 @@ spec:
           ports:
               - containerPort: 8181
           livenessProbe:
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            httpGet:
-              path: /actuator/health
-              port: 8181
-          readinessProbe:
-            initialDelaySeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
             httpGet:
               path: /actuator/health
               port: 8181
