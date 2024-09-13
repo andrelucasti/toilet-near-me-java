@@ -8,5 +8,5 @@ spec:
     kind: Deployment
     name: toilet
   minReplicas: 1
-  maxReplicas: 1
+  maxReplicas: 4
   targetCPUUtilizationPercentage: 40
