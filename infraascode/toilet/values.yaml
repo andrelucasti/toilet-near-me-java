@@ -90,14 +90,10 @@ livenessProbe:
   httpGet:
     path: /actuator/health
     port: http
-    initialDelaySeconds: 30
-    periodSeconds: 10
 readinessProbe:
   httpGet:
     path: /actuator/health
     port: http
-    initialDelaySeconds: 30
-    periodSeconds: 10
 
 autoscaling:
   enabled: true
