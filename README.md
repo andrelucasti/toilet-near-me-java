@@ -28,7 +28,7 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 ### 4 - Install Kong
 ```shell
 kubectl create ns kong
-helm install kong kong/kong -f infraascode/kong/kong-conf.yaml --set proxy.type=NodePort,proxy.http.nodePort=30000,proxy.tls.nodePort=30003 --set ingressController.installCRDs=false --set serviceMonitor.enabled=true --set serviceMonitor.labels.release=promstack --namespace kong
+helm install kong kong/kong -f infraascode/kong/kong-conf.yaml --set proxy.type=NodePort,proxy.http.nodePort=30000,proxy.tls.nodePort=30003 --set ingressController.installCRDs=false --set serviceMonitor.enabled=true --set serviceMonitor.labels.release=prometheus --namespace kong
 ```
 
 ### 5 - Install Postgres to application to use

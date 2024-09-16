@@ -1,0 +1,132 @@
+# Default values for toilet.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: andrelucastic/toilet-near-me-java
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "1.2.2"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  annotations:
+    konghq.com/plugins: prometheus
+    ingress.kubernetes.io/service-upstream: "true"
+  labels:
+    app: toilet
+    interface: rest
+    language: java
+  type: ClusterIP
+  port: 8181
+
+ingress:
+  enabled: true
+  className: "kong"
+  annotations:
+    konghq.com/override: toilet-do-not-preserve-host
+    konghq.com/plugins: toilet-rate-limit,prometheus
+  hosts:
+    - paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            serviceName: toilet
+            servicePort: 8181
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  requests:
+    cpu: 400m
+    memory: 200Mi
+  limits:
+    cpu: 800m
+    memory: 500Mi
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+livenessProbe:
+  httpGet:
+    path: /actuator/health
+    port: http
+readinessProbe:
+  httpGet:
+    path: /actuator/health
+    port: http
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+env:
+  SPRING_PROFILES_ACTIVE: k8s
+  SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql.postgres:5432/toilet
+  SPRING_DATASOURCE_USERNAME: toilet
+  SPRING_DATASOURCE_PASSWORD: toilet
+  HIKARI_MIN_IDLE: "1"
+  HIKARI_MAX_POOL_SIZE: "5"
+  HIKARI_CONNECTION_TIMEOUT: "5000"
+  OTEL_EXPORTER_ENDPOINT: http://otel-collector:4317
