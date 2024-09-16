@@ -8,7 +8,10 @@ spec:
   source:
       repoURL: https://github.com/andrelucasti/toilet-near-me-java.git
       targetRevision: HEAD
-      path: infraascode/k8s
+      path: infraascode/toilet
+      helm:
+        valueFiles:
+          - values.yaml
   destination:
       server: https://kubernetes.default.svc
       namespace: toilet-near-me
