@@ -86,14 +86,8 @@ resources:
   #   cpu: 100m
   #   memory: 128Mi
 
-livenessProbe:
-  httpGet:
-    path: /actuator/health
-    port: http
-readinessProbe:
-  httpGet:
-    path: /actuator/health
-    port: http
+livenessProbe: {}
+readinessProbe: {}
 
 autoscaling:
   enabled: true
