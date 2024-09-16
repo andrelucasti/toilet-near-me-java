@@ -22,10 +22,10 @@ export default function() {
         latitude: 1.0,
         longitude: 1.0,
         price: 0.5,
-        customerId: 'b4c1fbe4-3016-415b-bb37-b75f4915d8ef'
+        customerId: 'bae0fdce-1868-4cec-94a7-7ec83f86c1c3'
     })
 
-    let response = http.post("http://kong-fc-kong-proxy.kong/toilet", payload, params);
+    let response = http.post("http://kong-kong-proxy.kong/toilet", payload, params);
     check(response, {
         'status is 201': (r) => r.status === 201
     });

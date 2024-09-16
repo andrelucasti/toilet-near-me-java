@@ -6,5 +6,10 @@ metadata:
     kubernetes.io/ingress.class: "kong"
   labels:
     global: "true"
-config: {}
 plugin: prometheus
+config:
+  status_code_metrics: true
+  bandwidth_metrics: true
+  upstream_health_metrics: true
+  latency_metrics: true
+  per_consumer: false

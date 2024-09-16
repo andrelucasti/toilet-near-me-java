@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: toilet
   annotations:
+    konghq.com/plugins: prometheus
     ingress.kubernetes.io/service-upstream : "true"
   labels:
     app: toilet

@@ -3,16 +3,12 @@
 # the Admin API. It requires port-forwards to access without further
 # configuration to add them, e.g.:
 # kubectl port-forward deploy/your-deployment-kong 8001:8001
-
-image:
-  repository: andrelucastic/kong-alpine-fc
-  tag: 1.0.0
-
 env:
   prefix: /kong_prefix/
   database: "off"
-  plugins: bundled,oidc,kong-jwt2header
 
+prometheus:
+  enabled: true
 admin:
   enabled: true
   http:
@@ -30,13 +26,9 @@ postgresql:
 ingressController:
   image:
     repository: kong/kubernetes-ingress-controller
-    tag: "2.12"
+    tag: "3.3.1"
   enabled: true
   installCRDs: false
-
-podAnnotations:
-  prometheus.io/scrape: "true"
-  prometheus.io/port: "8100"
 
 proxy:
   type: NodePort
@@ -46,10 +38,3 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 70
-
-# controller:
-#   ingressClass: "kong"
-#   ingress:
-#     enabled: true
-#     annotations:
-#       konghq.com/protocols: "http"

@@ -3,11 +3,10 @@ kind: Ingress
 metadata:
   name: toilet-api
   annotations:
-    kubernetes.io/ingress.class: "kong"
     konghq.com/override: do-not-preserve-host
     konghq.com/plugins: toilet-rate-limit,prometheus
-    prometheus.io/scrape: "true"
 spec:
+  ingressClassName: kong
   rules:
     - http:
         paths:
@@ -25,6 +24,6 @@ spec:
 apiVersion: configuration.konghq.com/v1
 kind: KongIngress
 metadata:
-  name: toilet-do-not-preserve-host
+  name: do-not-preserve-host
 upstream:
-  host_header: toilet.svc.cluster.local
+  host_header: toilet.toilet-near-me.svc
