@@ -90,10 +90,12 @@ livenessProbe:
   httpGet:
     path: /actuator/health
     port: 8181
+  initialDelaySeconds: 60
 readinessProbe:
   httpGet:
     path: /actuator/health
     port: 8181
+  initialDelaySeconds: 60
 
 autoscaling:
   enabled: true
