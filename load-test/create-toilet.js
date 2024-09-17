@@ -19,10 +19,10 @@ export default function() {
 
     const payload = JSON.stringify({
         description: 'This is a kube test toilet - test kube',
-        latitude: 1.0,
+        latitude: 4.0,
         longitude: 1.0,
-        price: 0.5,
-        customerId: 'bae0fdce-1868-4cec-94a7-7ec83f86c1c3'
+        price: 1,
+        customerId: 'f1eb89be-5d99-4ad5-822e-89793be98e58'
     })
 
     let response = http.post("http://kong-kong-proxy.kong/toilet", payload, params);
