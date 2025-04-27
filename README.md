@@ -1,4 +1,3 @@
-```
 # Toilet Near Me Java
 
 ## Architecture Overview
@@ -107,4 +106,3 @@ This project is licensed under [Appropriate License Name here, e.g. MIT License]
 ---
 
 *This README is generated to help developers quickly understand and onboard the Toilet Near Me Java project.*
-```
